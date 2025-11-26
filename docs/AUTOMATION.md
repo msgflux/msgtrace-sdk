@@ -44,6 +44,7 @@ This document describes all automated workflows configured for msgtrace-sdk.
 
 **What it does**:
 - Merges PRs via comment commands (PyTorch-style)
+- Updates PR branches with latest changes from base branch
 - Waits up to 10 minutes for CI checks to pass
 - Checks user permissions (write/admin only)
 - Uses squash merge
@@ -51,12 +52,130 @@ This document describes all automated workflows configured for msgtrace-sdk.
 - Interactive feedback with emoji reactions
 
 **Commands**:
+
+**Merge Commands**:
 - `@mergebot merge`
 - `@merge-bot merge`
 - `/merge`
 - `merge`
 
-**See**: `MERGE_BOT_GUIDE.md` for detailed usage
+**Update Commands** (new in v1.0.0):
+- `@mergebot update`
+- `@merge-bot update`
+- `/update`
+- `update`
+
+#### How to Use the Merge Bot
+
+**Option 1: Mention the bot**
+```
+@mergebot merge
+```
+or
+```
+@merge-bot merge
+```
+
+**Option 2: Simple command**
+```
+/merge
+```
+or simply:
+```
+merge
+```
+
+**What happens when you merge:**
+1. Bot reacts with 🚀 - Shows it's processing
+2. **Checks permissions** - Only collaborators with write/admin can merge
+3. **Checks if PR is ready** - Can't be draft, can't have conflicts
+4. **Waits for checks** - Waits up to 10 minutes for CI, tests, CodeQL, etc.
+5. **Merges PR** - Uses squash merge
+6. **Deletes branch** - Removes branch automatically
+7. Bot reacts with 👍 - Confirms success
+
+**Update Command Usage:**
+
+Use `/update` or `@mergebot update` to update your PR branch with the latest changes from the base branch (usually `main`). This is useful when your PR is behind the base branch.
+
+**What happens when you update:**
+1. Bot reacts with 👀 - Shows it's processing
+2. **Checks permissions** - Only collaborators with write/admin can update
+3. **Merges base branch** - Merges latest changes from base into PR branch
+4. **Pushes changes** - Automatically pushes to your PR branch
+5. **Comments with status** - Confirms success or failure
+6. Bot reacts with 👍 (success) or 👎 (failure)
+
+**Example:**
+```
+# PR is behind main branch
+
+# You comment:
+/update
+
+# Bot merges main into your PR branch
+# Bot comments: "✅ Branch updated successfully by @username!"
+```
+
+**Requirements:**
+- ✅ You must have **write** or **admin** access to the repo
+- ✅ PR cannot be a draft (for merge)
+- ✅ PR cannot have conflicts (for merge)
+- ✅ All checks must pass (or bot waits up to 10 min for merge)
+
+**Error Messages:**
+
+**❌ No permission**
+```
+❌ @user you don't have permission to merge/update PRs.
+Only collaborators with write access can use these commands.
+```
+**Solution**: Ask a maintainer.
+
+**❌ PR is draft**
+```
+❌ Cannot merge: PR is still a draft.
+Please mark it as ready for review first.
+```
+**Solution**: Click "Ready for review" on the PR.
+
+**❌ Conflicts**
+```
+❌ Cannot merge: PR has conflicts or is not mergeable.
+Please resolve conflicts first.
+```
+**Solution**: Resolve conflicts manually.
+
+**❌ Checks failed**
+```
+❌ Cannot merge: The following checks failed:
+- ❌ Ruff Lint & Format
+- ❌ Test Python 3.10
+Please fix the issues and try again.
+```
+**Solution**: Fix errors and push again.
+
+**❌ Update conflicts**
+```
+❌ Failed to update branch with latest changes from `main`.
+
+This usually means there are merge conflicts that need to be resolved manually.
+```
+**Solution**: Merge main locally and resolve conflicts.
+
+**⏱️ Timeout**
+```
+⏱️ Timeout waiting for checks to complete (waited 10 minutes).
+You can try the merge command again once checks complete.
+```
+**Solution**: Wait for checks to complete and try again.
+
+**Security:**
+- 🔒 Only collaborators with **write access** can use commands
+- 🔒 Respects branch protection rules
+- 🔒 Waits for all required checks
+- 🔒 Cannot merge PRs with conflicts
+- 🔒 Cannot merge drafts
 
 ---
 
