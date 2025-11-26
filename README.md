@@ -605,58 +605,15 @@ When `MSGTRACE_TELEMETRY_ENABLED=false`:
 - No-op tracer is created (minimal overhead)
 - Attribute setters check `span.is_recording()` (fast path)
 
-## Development
+## Contributing
 
-### Setup
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
+- Development setup
+- Testing and code quality guidelines
+- Pull request process
+- Release workflow
 
-```bash
-# Clone repository
-git clone https://github.com/msgflux/msgtrace-sdk.git
-cd msgtrace-sdk
-
-# Install dependencies
-uv sync
-
-# Install with dev dependencies
-uv sync --group dev
-```
-
-### Testing
-
-```bash
-# Run tests
-uv run pytest -v
-
-# With coverage
-uv run pytest -v --cov=src/msgtrace --cov-report=html
-
-# Run specific test
-uv run pytest tests/test_attributes.py -v
-```
-
-### Code Quality
-
-```bash
-# Format code
-uv run ruff format
-
-# Lint
-uv run ruff check
-
-# Auto-fix
-uv run ruff check --fix
-```
-
-### CI/CD
-
-The project uses GitHub Actions for CI/CD:
-
-- **CI** (`ci.yml`) - Lint, format, test on Python 3.10-3.13
-- **Version Validation** (`validate-version-bump.yml`) - Validates version bumps on PRs
-- **Auto-Tag** (`auto-tag.yml`) - Creates git tags on version changes
-- **Publish** (`publish.yml`) - Publishes to TestPyPI and PyPI
-
-To release a new version, update `src/msgtrace/version.py` and open a PR. On merge, the version is automatically tagged and published to PyPI.
+For automation details (CI/CD, bots, etc.), see [AUTOMATION.md](docs/AUTOMATION.md).
 
 ## License
 

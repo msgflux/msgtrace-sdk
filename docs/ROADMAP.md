@@ -2,7 +2,7 @@
 
 Planned features for future releases.
 
-## v0.2.0 - Sampling and Performance
+## v1.1.0 - Sampling and Performance
 
 ### Trace Sampling
 Add support for trace sampling to reduce overhead in high-volume production environments.

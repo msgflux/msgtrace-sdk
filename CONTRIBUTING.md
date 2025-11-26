@@ -491,6 +491,67 @@ https://github.com/msgflux/msgtrace-sdk/settings/secrets/actions
 - `PYPI_API_TOKEN` - From https://pypi.org/manage/account/token/
 - `TEST_PYPI_API_TOKEN` - From https://test.pypi.org/manage/account/token/
 
+## 📦 Development Setup
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/msgflux/msgtrace-sdk.git
+cd msgtrace-sdk
+
+# Install dependencies
+uv sync
+
+# Install with dev dependencies
+uv sync --group dev
+```
+
+### Testing
+
+```bash
+# Run tests
+uv run pytest -v
+
+# With coverage
+uv run pytest -v --cov=src/msgtrace --cov-report=html
+
+# Run specific test
+uv run pytest tests/test_attributes.py -v
+```
+
+### Code Quality
+
+```bash
+# Format code
+uv run ruff format
+
+# Lint
+uv run ruff check
+
+# Auto-fix
+uv run ruff check --fix
+```
+
+### CI/CD
+
+The project uses GitHub Actions for CI/CD:
+
+- **CI** (`ci.yml`) - Lint, format, test on Python 3.10-3.13
+- **Validate Release** (`validate-release.yml`) - Security validation for releases
+- **Publish** (`publish.yml`) - Publishes to PyPI after validation
+- **Merge Bot** (`merge-bot.yml`) - Command-based PR merging with `/merge` and `/update`
+- **Stale Bot** (`stale.yml`) - Closes stale issues/PRs
+- **Release Drafter** (`release-drafter.yml`) - Auto-generates release notes
+- **CodeQL** (`codeql.yml`) - Security scanning
+- **Dependabot** - Automated dependency updates
+
+See [AUTOMATION.md](docs/AUTOMATION.md) for detailed automation documentation.
+
+### Release Process
+
+To release a new version, use the automated release script. See the "For Maintainers: Creating Releases" section above for detailed instructions.
+
 ## 📚 Resources
 
 - [Conventional Commits](https://www.conventionalcommits.org/)
@@ -499,3 +560,5 @@ https://github.com/msgflux/msgtrace-sdk/settings/secrets/actions
 - [Ruff Documentation](https://docs.astral.sh/ruff/)
 - [pytest Documentation](https://docs.pytest.org/)
 - [GitHub Actions](https://docs.github.com/en/actions)
+- [Automation Guide](docs/AUTOMATION.md)
+- [Roadmap](docs/ROADMAP.md)
