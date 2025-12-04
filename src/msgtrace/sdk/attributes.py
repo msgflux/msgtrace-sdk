@@ -449,6 +449,75 @@ class MsgTraceAttributes:
         if span.is_recording():
             span.set_attribute("version", version)
 
+    # ========== Module Attributes ==========
+
+    @staticmethod
+    def set_module_name(name: str):
+        """
+        Set module name.
+
+        Args:
+            name: Module name (e.g., 'vector_search', 'intent_classifier')
+        """
+        span = trace.get_current_span()
+        if span.is_recording():
+            span.set_attribute("module.name", name)
+
+    @staticmethod
+    def set_module_type(module_type: str):
+        """
+        Set module type for specialized visualizations.
+
+        Args:
+            module_type: Type (e.g., 'Agent', 'Tool', 'LLM', 'Transcriber', 'Retriever')
+        """
+        span = trace.get_current_span()
+        if span.is_recording():
+            span.set_attribute("module.type", module_type)
+
+    # ========== Extended Tool Attributes ==========
+
+    @staticmethod
+    def set_tool_execution_type(execution_type: str):
+        """
+        Set tool execution type.
+
+        Args:
+            execution_type: Execution type (e.g., 'local', 'remote')
+        """
+        span = trace.get_current_span()
+        if span.is_recording():
+            span.set_attribute("gen_ai.tool.execution.type", execution_type)
+
+    @staticmethod
+    def set_tool_protocol(protocol: str):
+        """
+        Set tool protocol.
+
+        Args:
+            protocol: Protocol (e.g., 'mcp', 'a2a', 'http', 'grpc')
+        """
+        span = trace.get_current_span()
+        if span.is_recording():
+            span.set_attribute("gen_ai.tool.protocol", protocol)
+
+    # ========== Extended Agent Attributes ==========
+
+    @staticmethod
+    def set_agent_response(response: str | dict[str, Any]):
+        """
+        Set agent response content.
+
+        Args:
+            response: Agent response as string or dict
+        """
+        span = trace.get_current_span()
+        if span.is_recording():
+            if isinstance(response, str):
+                span.set_attribute("gen_ai.agent.response", response)
+            else:
+                span.set_attribute("gen_ai.agent.response", json.dumps(response))
+
     # ========== Generic Custom Attributes (MsgTrace) ==========
 
     @staticmethod
