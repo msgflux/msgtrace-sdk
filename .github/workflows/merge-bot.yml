@@ -401,7 +401,7 @@ jobs:
 
       - name: Checkout PR branch
         if: steps.check_perms.outputs.has_permission == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ steps.pr_info.outputs.head_repo }}
           ref: ${{ steps.pr_info.outputs.head_branch }}
