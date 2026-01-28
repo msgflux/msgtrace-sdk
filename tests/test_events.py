@@ -286,6 +286,7 @@ class TestEventStream:
         collected_events = []
 
         async with EventStream() as stream:
+
             async def emit_events():
                 with Spans.span_context("my_test_span"):
                     add_event("test.event", {"key": "value"})
@@ -341,6 +342,7 @@ class TestEventStream:
         collected_events = []
 
         async with EventStream() as stream:
+
             async def emit_events():
                 with Spans.span_context("test"):
                     for i in range(5):
@@ -369,6 +371,7 @@ class TestEventStreamIntegration:
         collected_events = []
 
         async with EventStream() as stream:
+
             async def emit_events():
                 with Spans.init_flow("parent_flow"):
                     add_agent_start_event("my_agent")
@@ -397,6 +400,7 @@ class TestEventStreamIntegration:
         collected_chunks = []
 
         async with EventStream() as stream:
+
             async def emit_chunks():
                 with Spans.span_context("llm_response"):
                     chunks = ["The ", "weather ", "is ", "sunny ", "today."]
